@@ -1,0 +1,241 @@
+html {
+  font-size: 62.5%;
+  font-family: 'Space Mono', monospace; }
+
+body, h1, h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  width: 100%; }
+
+button {
+  cursor: pointer; }
+
+.container {
+  max-width: 1440px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.main__container {
+  width: 80%;
+  min-height: 90vh;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  background-color: #c5e4e7;
+  box-shadow: rgba(149, 157, 165, 0.4) 0 8px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .main__container .calculator {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 25px;
+    width: 60%;
+    height: 350px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white; }
+    .main__container .calculator .content {
+      border-radius: 10px; }
+    .main__container .calculator .content-left {
+      width: 48%;
+      height: 100%;
+      display: flex;
+      flex-direction: column; }
+      .main__container .calculator .content-left .error {
+        color: red; }
+      .main__container .calculator .content-left .bill {
+        margin-bottom: 30px; }
+        .main__container .calculator .content-left .bill label {
+          font-family: 'Space Mono', monospace;
+          font-weight: 700;
+          color: #7f9c9f; }
+        .main__container .calculator .content-left .bill__input {
+          height: 40px;
+          margin-top: 10px;
+          border-radius: 10px;
+          padding-left: 15px;
+          padding-right: 15px;
+          background-color: #f4fafa;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          .main__container .calculator .content-left .bill__input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0; }
+          .main__container .calculator .content-left .bill__input input {
+            width: 100%;
+            text-align: right;
+            color: #00494d;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: none;
+            border: unset;
+            outline: none;
+            font-size: 1.6rem; }
+      .main__container .calculator .content-left .tip {
+        width: 100%;
+        display: flex;
+        flex-direction: column; }
+        .main__container .calculator .content-left .tip label {
+          font-family: 'Space Mono', monospace;
+          font-weight: 700;
+          color: #7f9c9f; }
+        .main__container .calculator .content-left .tip .items {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: wrap; }
+          .main__container .calculator .content-left .tip .items .item {
+            width: 30%;
+            height: 40px;
+            margin-bottom: 10px; }
+            .main__container .calculator .content-left .tip .items .item .container__input {
+              width: 100%;
+              height: 100%;
+              display: inline-block;
+              position: relative;
+              cursor: pointer;
+              font-size: 30px;
+              user-select: none; }
+            .main__container .calculator .content-left .tip .items .item .container__input input {
+              position: absolute;
+              opacity: 0;
+              cursor: pointer; }
+            .main__container .calculator .content-left .tip .items .item .checkmark {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              font-weight: 400;
+              font-size: 1.8rem;
+              border-radius: 5px;
+              background-color: #00494d;
+              color: #f4fafa;
+              display: flex;
+              justify-content: center;
+              align-items: center; }
+            .main__container .calculator .content-left .tip .items .item .custom {
+              font-weight: 700;
+              background-color: #f4fafa;
+              color: #00494d; }
+            .main__container .calculator .content-left .tip .items .item .checkmark:after {
+              content: "";
+              position: absolute;
+              display: none; }
+            .main__container .calculator .content-left .tip .items .item .container__input .checkmark:after {
+              top: 50%;
+              left: 50%;
+              width: 15px;
+              height: 15px;
+              transform: translate(-50%, -50%) rotate(45deg); }
+            .main__container .calculator .content-left .tip .items .item .container__input input:checked ~ .checkmark {
+              background: #26c0ab;
+              color: #00494d; }
+            .main__container .calculator .content-left .tip .items .item .container__input input:checked ~ .checkmark:after {
+              display: block; }
+            .main__container .calculator .content-left .tip .items .item .onCustom .checkmark {
+              display: none; }
+            .main__container .calculator .content-left .tip .items .item .onCustom input[type=number] {
+              padding: 0 10px;
+              width: 100%;
+              width: -webkit-fill-available;
+              /* Mozilla-based browsers will ignore this. */
+              height: -webkit-fill-available;
+              background-color: #f4fafa;
+              border: 2px solid #5e7a7d;
+              border-radius: 10px;
+              outline: none;
+              opacity: 1;
+              font-size: 1.6rem;
+              text-align: right;
+              font-weight: 700;
+              color: #00494d; }
+              .main__container .calculator .content-left .tip .items .item .onCustom input[type=number]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0; }
+      .main__container .calculator .content-left .count__number {
+        margin-top: 10px;
+        margin-bottom: 30px; }
+        .main__container .calculator .content-left .count__number label {
+          font-family: 'Space Mono', monospace;
+          font-weight: 700;
+          color: #7f9c9f; }
+        .main__container .calculator .content-left .count__number__input {
+          height: 40px;
+          margin-top: 10px;
+          border-radius: 10px;
+          padding-left: 15px;
+          padding-right: 15px;
+          background-color: #f4fafa;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          .main__container .calculator .content-left .count__number__input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0; }
+          .main__container .calculator .content-left .count__number__input input {
+            width: 100%;
+            text-align: right;
+            color: #00494d;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: none;
+            border: unset;
+            outline: none;
+            font-size: 1.6rem; }
+    .main__container .calculator .content-right {
+      width: calc(48% - 60px);
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #00494d; }
+      .main__container .calculator .content-right .content .item {
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .main__container .calculator .content-right .content .item .label h1 {
+          font-weight: 700;
+          font-size: 1.6rem;
+          color: #c5e4e7; }
+        .main__container .calculator .content-right .content .item .label span {
+          font-size: 1.4rem;
+          color: #7f9c9f; }
+        .main__container .calculator .content-right .content .item .result h2 {
+          font-size: 4rem;
+          color: #26c0ab; }
+      .main__container .calculator .content-right .button-footer button {
+        height: 50px;
+        width: 100%;
+        border-radius: 10px;
+        font-size: 2rem;
+        font-weight: 700;
+        border: none;
+        color: #00494d;
+        background-color: #26c0ab; }
+
+@media screen and (max-width: 375px) {
+  body {
+    max-width: 375px; }
+  .container {
+    padding: 50px 0; }
+    .container .main__container {
+      padding: 30px 0;
+      width: 90%; }
+      .container .main__container .calculator {
+        flex-direction: column;
+        width: 70%;
+        height: unset; }
+        .container .main__container .calculator .content {
+          width: calc(100% - 20px);
+          padding: 20px 10px; } }

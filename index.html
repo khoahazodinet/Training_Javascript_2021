@@ -4,41 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="src/public/images/favicon-32x32.png">
   
   <title> Zodinet Training JavaScript | Tip calculator app</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
+      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
   </style>
+  <link rel="stylesheet" href="src/public/css/styles.css">
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+
 </head>
 <body>
+  <header>
 
-  Bill
+  </header>
+  <div class="container">
+    <section class="main__container">
+<!--      logo-->
+      <img src="src/public/images/logo.svg" alt="logo">
+<!--      main-->
+      <div class="calculator">
 
-  Select Tip %
-  5%
-  10%
-  15%
-  25%
-  50%
-  Custom
-
-  Number of People
-
-  Tip Amount
-  / person
-
-  Total
-  / person
-
-  Reset
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+<!--        left-->
+        <div class="content content-left">
+          <div class="bill">
+            <label>Bill</label>
+            <span class="error" id="bill-error"></span>
+            <div class="bill__input" >
+              <img src="src/public/images/icon-dollar.svg" alt="dollar-icon"/>
+              <input type="number" name="bill"/>
+            </div>
+          </div>
+          <div class="tip">
+            <label>
+              Select Tip %
+              <span class="error" id="tip-error"></span>
+            </label>
+            <div class="items">
+              <div class="item" >
+                <label class="container__input">
+                  <input type="radio" name="tipPercent" value="5">
+                  <span class="checkmark" onclick="onTipPercentClick()">5%</span>
+                </label>
+              </div>
+              <div class="item">
+                <label class="container__input">
+                  <input type="radio" name="tipPercent" value="10">
+                  <span class="checkmark" onclick="onTipPercentClick()">10%</span>
+                </label>
+              </div>
+              <div class="item">
+                <label class="container__input">
+                  <input type="radio" name="tipPercent" value="15">
+                  <span class="checkmark" onclick="onTipPercentClick()">15%</span>
+                </label>
+              </div>
+              <div class="item">
+                <label class="container__input">
+                  <input type="radio" name="tipPercent" value="25">
+                  <span class="checkmark" onclick="onTipPercentClick()">25%</span>
+                </label>
+              </div>
+              <div class="item">
+                <label class="container__input">
+                  <input type="radio" name="tipPercent" value="50">
+                  <span class="checkmark" onclick="onTipPercentClick()">50%</span>
+                </label>
+              </div>
+              <div class="item">
+                <label class="container__input" id="custom-tip">
+                  <input type="radio" name="tipPercent" value="custom">
+                  <input type="number" name="tipPercentCustom">
+                  <span class="checkmark custom" onclick="isCustomTip()">Custom</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="count__number">
+            <label>
+              Number of People
+              <span class="error" id="person-count-error"></span>
+            </label>
+            <div class="count__number__input" >
+              <img src="src/public/images/icon-person.svg" alt="person-icon"/>
+              <input type="number" name="personCount"/>
+            </div>
+          </div>
+        </div>
+<!--        right-->
+        <div class="content content-right">
+          <div class="content">
+            <div class="item tip-amount">
+              <div class="label">
+                <h1>
+                  Tip Amount
+                </h1>
+                <span>
+                  / person
+                </span>
+              </div>
+              <div class="result">
+                <h2 id="amount-result">
+                </h2>
+              </div>
+            </div>
+            <div class="item total">
+              <div class="label">
+                <h1>
+                  Total
+                </h1>
+                <span>
+                  / person
+                </span>
+              </div>
+              <div class="result">
+                <h2 id="total-result">
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="button-footer">
+            <button onclick="handleReset()" >RESET</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <footer>
+
+  </footer>
+  <script src="src/public/javascript/script.js"></script>
 </body>
 </html>
