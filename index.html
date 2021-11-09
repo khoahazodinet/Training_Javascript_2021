@@ -23,17 +23,15 @@
 <!--      logo-->
       <img src="src/public/images/logo.svg" alt="logo">
 <!--      main-->
-      <div class="calculator">
-
+      <form id="form-submit" class="calculator" onsubmit="event.preventDefault(); app.onsubmit()">
 <!--        left-->
         <div class="content content-left">
-          <form onsubmit="app.onsubmit()">
             <div class="bill">
-              <label>Bill</label>
+              <label for="billInput">Bill</label>
               <span class="error" id="bill-error"></span>
               <div class="bill__input" >
                 <img src="src/public/images/icon-dollar.svg" alt="dollar-icon"/>
-                <input type="number" value='0' name="bill"/>
+                <input type="number" id="billInput" value='0' name="bill" step="0.01"/>
               </div>
             </div>
             <div class="tip">
@@ -44,7 +42,7 @@
               <div class="items">
                 <div class="item" >
                   <label class="container__input">
-                    <input type="radio" name="tipPercent" value="5">
+                    <input type="radio" name="tipPercent" value="5" >
                     <span class="checkmark" onclick="app.onTipPercentClick()">5%</span>
                   </label>
                 </div>
@@ -82,16 +80,15 @@
               </div>
             </div>
             <div class="count__number">
-              <label>
+              <label for="count-number">
                 Number of People
                 <span class="error" id="person-count-error"></span>
               </label>
               <div class="count__number__input" >
                 <img src="src/public/images/icon-person.svg" alt="person-icon"/>
-                <input type="number" value="0" name="personCount"/>
+                <input id="count-number" type="number" value="0" name="personCount" step="0.01"/>
               </div>
             </div>
-          </form>
         </div>
 <!--        right-->
         <div class="content content-right">
@@ -128,13 +125,13 @@
             </div>
           </div>
           <div class="button-footer">
-            <button onclick="app.onsubmit()"
+            <button
                     id="submit-button" >SUBMIT</button>
             <button onclick="app.handleReset()" class="reset btn-disabled"
-                    id="reset-button" disabled>RESET</button>
+                    id="reset-button" type="button" disabled>RESET</button>
           </div>
         </div>
-      </div>
+      </form>
     </section>
   </div>
 

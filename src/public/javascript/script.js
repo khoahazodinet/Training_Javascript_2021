@@ -1,19 +1,21 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
-// bill
-const billElementGlobal = $('input[name=bill]');
+// big form
+const formElement = $('#form-submit');
+
+// form data
+const billElementGlobal = formElement['bill'];
+const tipElementsGlobal =  formElement['tipPercent'];
+const tipCustomElementGlobal = formElement['tipPercentCustom'];
+const personCountElementGlobal = formElement['personCount'];
+
+// error
 const billErrorElement = $('#bill-error');
-
-const tipElementsGlobal =  $$('input[name=tipPercent]');
-
-// tip custom
-const tipCustomBoxElementGlobal =  $('#custom-tip');
-const tipCustomElementGlobal =  $('input[name=tipPercentCustom]');
-
-// person count
-const personCountElementGlobal = $('input[name=personCount]');
 const personCountErrorElement = $('#person-count-error');
+
+// custom box
+const tipCustomBoxElementGlobal =  $('#custom-tip');
 
 // result
 const amountResultElementGlobal = $('#amount-result');
@@ -35,7 +37,18 @@ const app = {
   amountResult: '00.00',
   totalResult: '00.00',
   isResetDisabled: false,
+  isSubmitDisabled: false,
   timerId: true,
+  isFetchDone: true,
+
+  showSubmitBtn: function(){
+    submitBtnElement.disabled = false;
+    submitBtnElement.classList.remove('btn-disabled');
+  },
+  hindSubmitBtn: function(){
+    submitBtnElement.disabled = true;
+    submitBtnElement.classList.add('btn-disabled');
+  },
 
   onTipPercentClick: function(){
     this.tipNumber = '';
@@ -44,7 +57,6 @@ const app = {
   },
 
   isCustomTip: function(){
-    console.log('custom tip');
     tipCustomBoxElementGlobal.classList.add("onCustom");
   },
 
@@ -96,47 +108,43 @@ const app = {
     }
   },
 
+  // declare  let throttleTimer;
   throttle: function ( delay){
-    console.log('in');
     if(throttleTimer)
       return;
     throttleTimer=true;
+
+    // get data from server
     this.fetchData();
     setTimeout(()=>{
       throttleTimer=false;
-      this.isResetDisabled = false;
-      submitBtnElement.disabled = false;
-      submitBtnElement.classList.remove('btn-disabled');
     }, delay)
   },
 
   onsubmit: function (){
-    this.isResetDisabled = true;
-    submitBtnElement.disabled = true;
-    submitBtnElement.classList.add('btn-disabled');
-    this.throttle(1000);
+    this.hindSubmitBtn();
+    if(this.validate()===true){
+      this.throttle(100);
+    }else {
+      this.showSubmitBtn();
+    }
   },
 
-  fetchData: function (){
-    console.log('onsubmit');
-
+  validate: function (){
     // handle bill element
     if(billElementGlobal.value ===''){
       billErrorElement.innerHTML= 'Bill must be add';
-      return;
+      return false;
     }
     if(billElementGlobal.value<=0){
       billErrorElement.innerHTML= 'Bill must be greater than 0';
-      return;
+      return false;
     }
     this.bill = parseFloat(billElementGlobal.value);
     billErrorElement.innerHTML= '';
 
     // handle tip percent element
-    console.log(tipCustomElementGlobal.value);
     if(tipCustomElementGlobal.value=== ''){
-      console.log(tipElementsGlobal);
-
       for(let i = 0; i < tipElementsGlobal.length; i++) {
         if(tipElementsGlobal[i].checked)
           this.tipNumber= parseFloat(tipElementsGlobal[i].value);
@@ -145,20 +153,15 @@ const app = {
       this.tipNumber= parseFloat(tipCustomElementGlobal.value);
     }
 
-    // disable button when fetch data
-    this.isResetDisabled = true;
-    resetBtnElement.disabled = true;
-    resetBtnElement.classList.add('btn-disabled');
-
     // handle count person element
 
     if(personCountElementGlobal.value === '0'){
       personCountErrorElement.innerHTML= 'Number of people must be add';
-      return;
+      return false;
     }
     if(personCountElementGlobal.value <= 0){
       personCountErrorElement.innerHTML= 'Number of people must be greater than 0';
-      return;
+      return false;
     }
 
     this.percentCount = parseFloat(personCountElementGlobal.value);
@@ -166,13 +169,21 @@ const app = {
 
     amountResultElementGlobal.innerHTML = '--.--';
     totalResultElementGlobal.innerHTML = '--.--';
-    const url = 'https://plitter-server.vercel.app/api/calculate?' +
-      `bill=${this.bill}&people=${this.percentCount}&tipPercent=${this.tipNumber}`
+    return true;
+  },
 
-    console.log(url);
+  fetchData: function (){
+
+    // disable button when fetch data
+    this.isResetDisabled = true;
+    resetBtnElement.disabled = true;
+    resetBtnElement.classList.add('btn-disabled');
+
+    const url = 'https://plitter-server.vercel.app/api/calculate?' +
+      `bill=${this.bill}&people=${this.percentCount}&tipPercent=${this.tipNumber}`;
+
     this.getData(url
     ).then(res=>{
-      console.log(res);
       if(res['result']===true){
         this.amountResult = res['amount'];
         this.totalResult = res['total'];
@@ -183,11 +194,13 @@ const app = {
       this.isResetDisabled = false;
       resetBtnElement.disabled = false;
       resetBtnElement.classList.remove('btn-disabled');
+      this.showSubmitBtn();
     }).catch(req=>{
       // available button when done
       this.isResetDisabled = false;
       resetBtnElement.disabled = false;
       resetBtnElement.classList.remove('btn-disabled');
+      this.showSubmitBtn();
     })
   },
 
@@ -229,75 +242,35 @@ const app = {
   },
 
   checkPrice: function (){
-    // console.log('out blur');
+    // console.log('on blur form');
   },
 
-  // checkPrice :function (){
-  //
-  //   // handle bill element
-  //   if(billElementGlobal.value ===''){
-  //     billErrorElement.innerHTML= 'Bill must be add';
-  //     return;
-  //   }
-  //   if(billElementGlobal.value<=0){
-  //     billErrorElement.innerHTML= 'Bill must be greater than';
-  //     return;
-  //   }
-  //   this.bill = parseFloat(billElementGlobal.value);
-  //   billErrorElement.innerHTML= '';
-  //
-  //   // handle tip percent element
-  //
-  //   console.log(tipCustomElementGlobal.value);
-  //   if(tipCustomElementGlobal.value=== ''){
-  //     console.log(tipElementsGlobal);
-  //
-  //     for(let i = 0; i < tipElementsGlobal.length; i++) {
-  //       if(tipElementsGlobal[i].checked)
-  //         this.tipNumber= parseFloat(tipElementsGlobal[i].value);
-  //     }
-  //   }else {
-  //     this.tipNumber= parseFloat(tipCustomElementGlobal.value);
-  //   }
-  //
-  //   // handle count person element
-  //
-  //   if(personCountElementGlobal.value === '0'){
-  //     personCountErrorElement.innerHTML= 'Number of people must be add';
-  //     return;
-  //   }
-  //   if(personCountElementGlobal.value <= 0){
-  //     personCountErrorElement.innerHTML= 'Number of people must be greater than 0';
-  //     return;
-  //   }
-  //
-  //   this.percentCount = parseFloat(personCountElementGlobal.value);
-  //   personCountErrorElement.innerHTML= '';
-  //
-  //   // calculate result
-  //   this.amountResult = (
-  //     this.bill * this.tipNumber / 100
-  //   ) / this.percentCount;
-  //   this.totalResult = (
-  //     (this.bill * this.tipNumber / 100) + this.bill
-  //   ) / this.percentCount;
-  //
-  //   // show result
-  //   amountResultElementGlobal.innerHTML = this.amountResult.toFixed(2).toString();
-  //   totalResultElementGlobal.innerHTML = this.totalResult.toFixed(2).toString();
-  //
-  // },
-
   start: function () {
-    billElementGlobal.addEventListener('blur', (event) => {
+
+    formElement.addEventListener('blur', (event) => {
       this.checkPrice();
     }, true);
-    tipCustomElementGlobal.addEventListener('blur', (event) => {
-      this.checkPrice();
-    }, true);
-    personCountElementGlobal.addEventListener('blur', (event) => {
-      this.checkPrice();
-    }, true);
+
+    billElementGlobal.addEventListener('focus', () => {
+      if(billElementGlobal.value=== '0'){
+        billElementGlobal.value='';
+      }
+    });
+    billElementGlobal.addEventListener('blur', () => {
+      if(billElementGlobal.value=== ''){
+        billElementGlobal.value='0';
+      }
+    });
+    personCountElementGlobal.addEventListener('focus', () => {
+      if(personCountElementGlobal.value=== '0'){
+        personCountElementGlobal.value='';
+      }
+    });
+    personCountElementGlobal.addEventListener('blur', () => {
+      if(personCountElementGlobal.value=== ''){
+        personCountElementGlobal.value='0';
+      }
+    });
     billElementGlobal.addEventListener('change', (event) => {
       this.handleResetAvailable();
     });
