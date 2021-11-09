@@ -101,7 +101,7 @@ const app = {
     if(throttleTimer)
       return;
     throttleTimer=true;
-    this.onsubmit();
+    this.fetchData();
     setTimeout(()=>{
       throttleTimer=false;
       this.isResetDisabled = false;
@@ -110,14 +110,14 @@ const app = {
     }, delay)
   },
 
-  onsubmit2: function (){
+  onsubmit: function (){
     this.isResetDisabled = true;
     submitBtnElement.disabled = true;
     submitBtnElement.classList.add('btn-disabled');
     this.throttle(1000);
   },
 
-  onsubmit: function (){
+  fetchData: function (){
     console.log('onsubmit');
 
     // handle bill element
