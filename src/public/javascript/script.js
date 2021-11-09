@@ -19,8 +19,13 @@ const personCountErrorElement = $('#person-count-error');
 const amountResultElementGlobal = $('#amount-result');
 const totalResultElementGlobal = $('#total-result');
 
+// submit button
+const submitBtnElement = $('#submit-button');
+
 // reset button
 const resetBtnElement = $('#reset-button');
+
+let throttleTimer;
 
 const app = {
   bill: 0,
@@ -30,6 +35,7 @@ const app = {
   amountResult: '00.00',
   totalResult: '00.00',
   isResetDisabled: false,
+  timerId: true,
 
   onTipPercentClick: function(){
     this.tipNumber = '';
@@ -46,6 +52,9 @@ const app = {
     // bill remove
     billElementGlobal.value = 0;
 
+    // bill error remove
+    billErrorElement.innerHTML= '';
+
     // tip remove
     for(let i = 0; i < tipElementsGlobal.length; i++) {
       if(tipElementsGlobal[i].checked)
@@ -55,6 +64,9 @@ const app = {
     // tip custom remove
     tipCustomElementGlobal.classList.remove("onCustom");
     tipCustomElementGlobal.value= '';
+
+    // tip custom error remove
+    personCountErrorElement.innerHTML= '';
 
     // person count remove
     personCountElementGlobal.value = 0;
@@ -84,6 +96,27 @@ const app = {
     }
   },
 
+  throttle: function ( delay){
+    console.log('in');
+    if(throttleTimer)
+      return;
+    throttleTimer=true;
+    this.onsubmit();
+    setTimeout(()=>{
+      throttleTimer=false;
+      this.isResetDisabled = false;
+      submitBtnElement.disabled = false;
+      submitBtnElement.classList.remove('btn-disabled');
+    }, delay)
+  },
+
+  onsubmit2: function (){
+    this.isResetDisabled = true;
+    submitBtnElement.disabled = true;
+    submitBtnElement.classList.add('btn-disabled');
+    this.throttle(1000);
+  },
+
   onsubmit: function (){
     console.log('onsubmit');
 
@@ -93,14 +126,13 @@ const app = {
       return;
     }
     if(billElementGlobal.value<=0){
-      billErrorElement.innerHTML= 'Bill must be greater than';
+      billErrorElement.innerHTML= 'Bill must be greater than 0';
       return;
     }
     this.bill = parseFloat(billElementGlobal.value);
     billErrorElement.innerHTML= '';
 
     // handle tip percent element
-
     console.log(tipCustomElementGlobal.value);
     if(tipCustomElementGlobal.value=== ''){
       console.log(tipElementsGlobal);
@@ -112,6 +144,11 @@ const app = {
     }else {
       this.tipNumber= parseFloat(tipCustomElementGlobal.value);
     }
+
+    // disable button when fetch data
+    this.isResetDisabled = true;
+    resetBtnElement.disabled = true;
+    resetBtnElement.classList.add('btn-disabled');
 
     // handle count person element
 
@@ -133,8 +170,7 @@ const app = {
       `bill=${this.bill}&people=${this.percentCount}&tipPercent=${this.tipNumber}`
 
     console.log(url);
-    this.getData(
-      url
+    this.getData(url
     ).then(res=>{
       console.log(res);
       if(res['result']===true){
@@ -143,11 +179,19 @@ const app = {
         amountResultElementGlobal.innerHTML = this.amountResult.toFixed(2).toString();
         totalResultElementGlobal.innerHTML = this.totalResult.toFixed(2).toString();
       }
+      // available button when done
+      this.isResetDisabled = false;
+      resetBtnElement.disabled = false;
+      resetBtnElement.classList.remove('btn-disabled');
+    }).catch(req=>{
+      // available button when done
+      this.isResetDisabled = false;
+      resetBtnElement.disabled = false;
+      resetBtnElement.classList.remove('btn-disabled');
     })
   },
 
-  getData: async function (url = '') {
-    // Default options are marked with *
+  getData: async function (url) {
     const response = await fetch(url, {
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin
