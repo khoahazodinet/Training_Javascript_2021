@@ -257,6 +257,9 @@ const app = {
     billElementGlobal.addEventListener('change', (event) => {
       this.handleResetAvailable();
     });
+    personCountElementGlobal.addEventListener('change', (event) => {
+      this.handleResetAvailable();
+    });
   },
 }
 
