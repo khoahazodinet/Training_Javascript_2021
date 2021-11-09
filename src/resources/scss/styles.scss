@@ -297,10 +297,11 @@ button{
         }
       }
       .button-footer{
-
+        display: flex;
+        justify-content: space-between;
         button{
           height: 50px;
-          width: 100%;
+          width: 45%;
           border-radius: 10px;
 
           font-size: 2rem;
@@ -309,6 +310,9 @@ button{
           border: none;
           color: $Very-dark-cyan;
           background-color: $Strong-cyan;
+        }
+        .btn-disabled{
+          background-color: $Dark-grayish-cyan-1;
         }
       }
     }

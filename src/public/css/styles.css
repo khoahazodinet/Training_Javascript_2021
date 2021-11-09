@@ -214,15 +214,20 @@ button {
         .main__container .calculator .content-right .content .item .result h2 {
           font-size: 4rem;
           color: #26c0ab; }
-      .main__container .calculator .content-right .button-footer button {
-        height: 50px;
-        width: 100%;
-        border-radius: 10px;
-        font-size: 2rem;
-        font-weight: 700;
-        border: none;
-        color: #00494d;
-        background-color: #26c0ab; }
+      .main__container .calculator .content-right .button-footer {
+        display: flex;
+        justify-content: space-between; }
+        .main__container .calculator .content-right .button-footer button {
+          height: 50px;
+          width: 45%;
+          border-radius: 10px;
+          font-size: 2rem;
+          font-weight: 700;
+          border: none;
+          color: #00494d;
+          background-color: #26c0ab; }
+        .main__container .calculator .content-right .button-footer .btn-disabled {
+          background-color: #5e7a7d; }
 
 @media screen and (max-width: 375px) {
   body {
