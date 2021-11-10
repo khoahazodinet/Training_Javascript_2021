@@ -230,7 +230,7 @@ button {
         .main__container .calculator .content-right .button-footer .btn-disabled {
           background-color: #5e7a7d; }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 1080px) {
   .container {
     padding: 50px 0; }
     .container .main__container {
